@@ -1,0 +1,31 @@
+networks:
+  dev:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.backend
+    ports:
+      - "5000:5000"
+    networks:
+      - dev 
+
+  frontend:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.server
+
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.server
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - dev 
+

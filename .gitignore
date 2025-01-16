@@ -1,0 +1,9 @@
+# backend
+backend/__pycache__/*
+backend/*/__pycache__/*
+backend/.venv/*
+
+# frontend
+frontend/node_modules/*
+frontend/obj/Debug/*
+frontend/.vscode/*
