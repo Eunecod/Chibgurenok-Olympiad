@@ -10,7 +10,7 @@ app.include_router(Route)
 app.mount("/storage", StaticFiles(directory="./storage"), name="storage")
 
 origins: list = [
-    "http://79.141.77.12:8000",  # URL Vue.js приложения
+    "http://localhost:8000",  # URL Vue.js приложения
 ]
 
 app.add_middleware(
@@ -22,4 +22,4 @@ app.add_middleware(
 )
 
 if (__name__ == "__main__"):
-    run("App:app", host="79.141.77.12", port=5000, reload=True)
+    run("App:app", host="0.0.0.0", port=5000, reload=True)
