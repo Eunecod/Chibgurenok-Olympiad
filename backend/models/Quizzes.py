@@ -16,14 +16,9 @@ class CQuizzes(CBase):
         await _session.commit()
         return self.ID
 
-    @CBase.Read
-    async def Read(self, _session): 
-        sQuery = select(CQuizzes)
-        anyResult = await _session.execute(sQuery)
-        return anyResult.scalars().all()
-
     @CBase.GetObjectID
     async def GetObjectID(self, nID: int, _session):
         sQuery = select(CQuizzes).filter(CQuizzes.ID == nID)
         anyResult = await _session.execute(sQuery)
         return anyResult.scalars().first()
+    

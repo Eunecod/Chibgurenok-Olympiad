@@ -1,5 +1,5 @@
-from sqlalchemy.orm import relationship, selectinload
 from sqlalchemy     import Column, Integer, Text, select, update, ForeignKey
+from sqlalchemy.orm import relationship, selectinload
 from .BaseModels    import CBase
 
 

@@ -63,3 +63,4 @@ class CAccounts(CBase):
         sQuery = select(CAccounts).filter(CAccounts.ID == nID)
         anyResult = await _session.execute(sQuery)
         return anyResult.scalars().first()
+    

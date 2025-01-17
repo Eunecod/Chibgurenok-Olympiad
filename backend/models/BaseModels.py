@@ -61,4 +61,4 @@ class CBase(_Base):
             async with self.GetSession() as _session:
                 return await func(self, nID, _session, *args, **kwargs)
         return wrapper
-
+    

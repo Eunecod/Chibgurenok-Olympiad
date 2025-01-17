@@ -18,21 +18,10 @@ class CAdmin(CBase):
         _session.add(self)
         await _session.commit()
         return self.ID
-    
-    @CBase.Read
-    async def Read(self, _session): 
-        sQuery = select(CAdmin)
-        anyResult = await _session.execute(sQuery)
-        return anyResult.scalars().all()
 
     @CBase.GetObject
     async def GetObject(self, _field: any, _value: any, _session):
         sQuery = select(CAdmin).filter(_field == _value)
         anyResult = await _session.execute(sQuery)
         return anyResult.scalars()
-
-    @CBase.GetObjectID
-    async def GetObjectID(self, nID: int, _session):
-        sQuery = select(CAdmin).filter(CAdmin.ID == nID)
-        anyResult = await _session.execute(sQuery)
-        return anyResult.scalars().first()
+    

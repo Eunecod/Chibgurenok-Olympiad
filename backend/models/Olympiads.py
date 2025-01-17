@@ -1,4 +1,4 @@
-from sqlalchemy     import Column, Integer, Text, select, update, delete, ForeignKey
+from sqlalchemy     import Column, Integer, Text, select, ForeignKey
 from sqlalchemy.orm import relationship, selectinload
 from .BaseModels    import CBase
 
@@ -38,34 +38,6 @@ class COlympiads(CBase):
         anyResult = await _session.execute(sQuery)
         return anyResult.scalars().all()
     
-    @CBase.Update
-    async def Update(self, nID: int, _session):
-        sQuery = (
-            update(COlympiads)
-            .where(COlympiads.ID == nID)
-            .values(
-                Discipline      = self.Discipline,
-                Passage_Time    = self.Passage_Time,
-                Access_Date     = self.Access_Date,
-                Active          = self.Active,
-                Quiz            = self.Quiz,
-                Title           = self.Title,
-                Describe        = self.Describe,
-                Path_Preview    = self.Path_Preview,
-            )
-        )   
-        await _session.execute(sQuery)
-        await _session.commit()
-    
-    @CBase.Delete
-    async def Delete(self, nID: int, _session):
-        sQuery = (
-            delete(COlympiads)
-            .where(COlympiads.ID == nID)
-        )
-        await _session.execute(sQuery)
-        await _session.commit()
-    
     @CBase.GetObject
     async def GetObject(self, _field: any, _value: any, _session):
         sQuery = select(COlympiads).filter(_field == _value).options(selectinload(COlympiads.__discipline_relation), selectinload(COlympiads.__quiz_relation))
@@ -77,3 +49,4 @@ class COlympiads(CBase):
         sQuery = select(COlympiads).filter(COlympiads.ID == nID).options(selectinload(COlympiads.__discipline_relation), selectinload(COlympiads.__quiz_relation))
         anyResult = await _session.execute(sQuery)
         return anyResult.scalars().first()
+    

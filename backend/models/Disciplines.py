@@ -27,3 +27,4 @@ class CDisciplines(CBase):
         sQuery = select(CDisciplines).filter(CDisciplines.ID == nID)
         anyResult = await _session.execute(sQuery)
         return anyResult.scalars().first()
+    
