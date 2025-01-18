@@ -34,86 +34,86 @@ const routes = [
     path: '/',
     name: 'Main',
     component: Main,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/signup',
     name: 'Signup',
     component: Signup,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/profile',
     name: 'Profile',
     component: Profile,
-    meta: { protected: true }
+    meta: { protected: true, admin: false }
   },
   {
     path: '/quiz/:id',
     name: 'Quiz',
     component: Quiz,
-    meta: { protected: true },
+    meta: { protected: true, admin: false },
     props: true
   },
   {
     path: '/result',
     name: 'Result',
     component: Result,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/rules',
     name: 'Rules',
     component: Rules,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/olympiad',
     name: 'Olympiad',
     component: Olympiad,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/admin/olympiad',
     name: 'OlympiadAdmin',
     component: OlympiadAdmin,
-    meta: { protected: true }
+    meta: { protected: true, admin: true }
   },
   {
     path: '/contact',
     name: 'Contact',
     component: Contact,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   },
   {
     path: '/admin/result',
     name: 'ResultAdmin',
     component: ResultAdmin,
-    meta: { protected: true }
+    meta: { protected: true, admin: true }
   },
   {
     path: '/admin/reply/:id',
     name: 'ReplyAdmin',
     component: ReplyAdmin,
-    meta: { protected: true },
+    meta: { protected: true, admin: true },
     props: true
   },
   {
     path: '/admin/signup/administrator',
     name: 'SignupAdmin',
     component: SignupAdmin,
-    meta: { protected: true }
+    meta: { protected: true, admin: true }
   },
   {
     path: '/:pathMatch(.*)*',
     component: NotFound,
-    meta: { protected: false }
+    meta: { protected: false, admin: false }
   }
 ];
 
@@ -123,7 +123,7 @@ const handler_router = createRouter({
 });
 handler_router.beforeEach((to, from, next) => {
   if (to.meta.protected) {
-    const URL = '/protected';
+    const URL = to.meta.admin ? '/admin/verification' : '/protected';
     _axios.get(URL).then(response => {
       response.data.session ? next() : next('/login');
     }).catch(error => {
