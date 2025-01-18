@@ -16,7 +16,9 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile.server
-
+    networks:
+      - dev 
+      
   nginx:
     build:
       context: .
