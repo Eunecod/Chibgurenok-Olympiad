@@ -20,6 +20,6 @@ def CreateSignKey() -> str:
     return byteSign.decode('utf-8')
 
 
-def VerifySignKey(strSign) -> bool:
-    bCheck: bool = checkpw(SECRET_KEY.encode("utf-8"), strSign.encode("utf-8"))
+def VerifySignKey(sSign: str) -> bool:
+    bCheck: bool = checkpw(SECRET_KEY.encode("utf-8"), sSign.encode("utf-8"))
     return bCheck

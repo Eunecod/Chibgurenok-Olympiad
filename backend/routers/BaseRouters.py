@@ -15,8 +15,8 @@ async def Protected_Admin_Endpoint() -> dict:
     Payload: dict = Oauth2.GetPayload()
     _usr: dict = Payload.get("usr")
 
-    sAPIKey: str = _usr.get("key")
-    if (VerifySignKey(sAPIKey)):
-        return { "session": True }
+    sKey: str = _usr.get("key")
+    if (sKey):
+        return { "session": VerifySignKey(sKey) }
     else:
         return { "session": False }
