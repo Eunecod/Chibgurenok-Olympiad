@@ -15,17 +15,18 @@
           options:  []
         }),
       },
+      cache_reply: {
+        type: [Array, Number, String],
+        required: false,
+        default: () => [],
+      }
     },
     data() {
       return {
         reply: {
           id:     this.data.id,
-          answer: [],
+          answer: this.cache_reply,
         },
-        single_answer:    [],
-        multiple_answer:  [],
-        text_answer:      [],
-        detailed_answer:  [],
       };
     },
     methods: {
@@ -60,22 +61,22 @@
         <div v-if="data.options" class="field" v-for="option in data.options">
 
           <label v-if="data.type == 'single'">
-            <input v-model="single_answer" type="radio" :name="option" :value="option.id" @change="RecordAnswer(single_answer)"/> {{ option.text }}
+            <input v-model="reply.answer" type="radio" :name="option" :value="option.id" @change="RecordAnswer(reply.answer)"/> {{ option.text }}
           </label>
 
           <label v-if="data.type == 'multiple'">
-            <input v-model="multiple_answer" class="checkbox" type="checkbox" :value="option.id" @change="RecordAnswer(multiple_answer)"/> {{ option.text }}
+            <input v-model="reply.answer" class="checkbox" type="checkbox" :value="option.id" @change="RecordAnswer(reply.answer)"/> {{ option.text }}
           </label>
 
         </div>
 
         <div class="field">
           <label v-if="data.type == 'text'">
-            <input v-model="text_answer" class="input" type="text" placeholder="Ответ" @change="RecordAnswer(text_answer)"/>
+            <input v-model="reply.answer" class="input" type="text" placeholder="Ответ" @change="RecordAnswer(reply.answer)"/>
           </label>
 
           <label v-if="data.type == 'detailed'">
-            <textarea v-model="detailed_answer" class="textarea" type="text" placeholder="Развернутый ответ"  @change="RecordAnswer(detailed_answer)"/>
+            <textarea v-model="reply.answer" class="textarea" type="text" placeholder="Развернутый ответ"  @change="RecordAnswer(reply.answer)"/>
           </label>
         </div>
 

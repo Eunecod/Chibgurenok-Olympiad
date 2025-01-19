@@ -1,4 +1,5 @@
 <script>
+  import { Reply } from '@/storage/quiz.js';
   import _axios from '@/util/axioshandler.js';
 
   import MessageBox from '@/components/MessageBox.vue';
@@ -15,6 +16,13 @@
 
         messagebox_ask_show:  false,
         messagebox_info_show: false
+      };
+    },
+    setup() {
+      const storage_reply = Reply();
+
+      return {
+        storage_reply,
       };
     },
     mounted() {
@@ -37,9 +45,13 @@
         });
       },
       ConstructReply() {
-        this.quiz_body.forEach((question, index) => {
-          this.reply_body.push({ id: question.id, answer: null})
-        });
+        this.reply_body = this.storage_reply.GetCache(this.id);
+        if (this.reply_body.length == 0) {
+          this.quiz_body.forEach((question, index) => {
+            this.reply_body.push({ id: question.id, answer: []})
+          });
+          this.storage_reply.SaveReply(this.id, this.reply_body);
+        }
       },
       RecordReply(question) {
         const index = this.reply_body.findIndex(reply => reply.id == question.id);
@@ -56,6 +68,7 @@
         };
         _axios.post(URL, data).then(response => {
           this.$router.push({ name: 'Profile' });
+          this.storage_reply.FreeCache(this.id);
         }).catch(error => {
           console.error(error);
         });
@@ -99,7 +112,7 @@
 
 
             <div v-for="(question, index) in quiz_body" :key="index">
-              <Question :data="question" @answer-submitted="RecordReply($event)"></Question>
+              <Question :data="question" :cache_reply="reply_body.find(item => item.id === question.id).answer" @answer-submitted="RecordReply($event)"></Question>
             </div>
 
             <div class="buttons is-half is-right">
