@@ -2,7 +2,7 @@ import _axios from '@/util/axioshandler.js';
 import { GenerateUUID } from '@/util/UUIDService';
 
 
-const STORAGE_PREFIX = "/storage/file/";
+const STORAGE_PREFIX = "/storage/upload/";
 
 export function GetFileServer(filename) {
   const path = STORAGE_PREFIX + filename;

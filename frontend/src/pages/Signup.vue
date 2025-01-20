@@ -132,6 +132,16 @@
       LoadCSV(event) {
         this.file = event.target.files[0];
       },
+      DownloadTemplate() {
+        const URL = "/download/file/csv-student";
+        _axios.get(URL, { responseType: 'blob' }).then(response => {
+          const blob = new Blob([response.data], { type: 'text/csv;charset=utf-8;' });
+          saveAs(blob, 'Шаблон.csv');
+        }).catch(error => {
+          console.log(error);
+          this.$push_toast('Ошибка при загрузки шаблона.', { type: 'danger', duration: 5000 });
+        });
+      },
       ToogleMode() {
         this.mode.user = !this.mode.user;
         this.mode.csv  = !this.mode.csv;
@@ -267,16 +277,27 @@
                   <input v-model="fullname" class="input" type="text" placeholder="ФИО студента" />
                 </div>
               </div>
+              
+              <div v-if="mode.csv" class="field">
+                <div class="field">
+                  <button class="button is-fullwidth" @click="DownloadTemplate()"> 
+                    <span> 
+                      <i class="fa-solid fa-download"></i> 
+                      Скачать Шаблон CSV  
+                    </span>
+                  </button>
+                </div>
 
-              <div v-if="mode.csv" class="field file has-name is-fullwidth">
-                <label class="file-label">
-                  <input class="file-input" type="file" name="resume" @change="LoadCSV" accept=".csv" />
-                  <span class="file-cta">
-                    <span class="file-icon"> <i class="fas fa-upload"></i> </span>
-                    <span class="file-label"> Загрузить файл CSV </span>
-                  </span>
-                  <span class="file-name"> {{ file ? file.name : 'Файл не выбран' }} </span>
-                </label>
+                <div class="field file has-name is-fullwidth">
+                  <label class="file-label">
+                    <input class="file-input" type="file" name="resume" @change="LoadCSV" accept=".csv" />
+                    <span class="file-cta">
+                      <span class="file-icon"> <i class="fas fa-upload"></i> </span>
+                      <span class="file-label"> Загрузить файл CSV </span>
+                    </span>
+                    <span class="file-name"> {{ file ? file.name : 'Файл не выбран' }} </span>
+                  </label>
+                </div>  
               </div>
 
               <div class="field">

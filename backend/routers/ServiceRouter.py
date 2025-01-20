@@ -7,7 +7,8 @@ from typing             import List
 import shutil, os
 
 
-UPLOAD_DIRECTORY = "./storage/file"
+UPLOAD_DIRECTORY    = "./storage/upload"
+DOWNLOAD_DIRECTORY  = "./storage/download"
 
 @Route.get("/get/olympiads")
 async def Get_Olympiads_Endpoint() -> dict:
@@ -90,8 +91,18 @@ async def UploadFile_Olympiad_Endpoint(File: List[UploadFile] = File(...)) -> di
     return {}
 
 
+@Route.get("/download/file/csv-student")
+async def Download_Template_file():
+    sTemplateName: str = "template.csv"
+    sFilePath = os.path.join(DOWNLOAD_DIRECTORY, sTemplateName)
+    if (not os.path.isfile(sFilePath)):
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    return FileResponse(path=sFilePath, filename=sTemplateName)
+
+
 @Route.get("/download/file/{Filename}")
-async def download_file(Filename: str):
+async def Download_file(Filename: str):
     sFilePath = os.path.join(UPLOAD_DIRECTORY, Filename)
     if (not os.path.isfile(sFilePath)):
         raise HTTPException(status_code=404, detail="File not found")
