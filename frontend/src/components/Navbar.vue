@@ -66,7 +66,7 @@
 
       <div :class="{'navbar-menu': true, 'is-active': is_active}">
       
-        <div class="navbar-start">
+        <div class="navbar-start" @click="ToggleMenu()">
           <router-link to="/olympiad" class="navbar-item">
             <a class="navbar-item"> Олимпиады </a>
           </router-link>
