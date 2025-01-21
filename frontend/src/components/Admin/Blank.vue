@@ -144,21 +144,21 @@
 
       <div class="field" v-for="(option, index) in data.options" :key="index">
 
-        <div v-if="data.type == 'single'" class="field level is-mobile">
-          <input v-model="single_correct" type="radio" :name="option" :value="option.id" @change="SetCorrect(single_correct)" />
+        <div v-if="data.type == 'single'" :name="data.id" class="field level is-mobile">
+          <input v-model="single_correct" type="radio" :value="option.id" @change="SetCorrect(single_correct)" />
           <input v-model="option.text" class="input" placeholder="Ответ" />
 
           <button class="button" @click="DelOption(option.id)"> <span> <i class="fa-solid fa-xmark"></i> </span> </button>
         </div>
 
-        <div v-if="data.type == 'multiple'" class="field level is-mobile">
-          <input v-model="multiple_correct" class="checkbox" type="checkbox" :name="option" :value="option.id" @change="SetCorrect(multiple_correct)" />
+        <div v-if="data.type == 'multiple'" :name="data.id" class="field level is-mobile">
+          <input v-model="multiple_correct" class="checkbox" type="checkbox" :value="option.id" @change="SetCorrect(multiple_correct)" />
           <input v-model="option.text" class="input" placeholder="Ответ" />
 
           <button class="button" @click="DelOption(option.id)"> <span> <i class="fa-solid fa-xmark"></i> </span> </button>
         </div>
 
-        <div v-if="data.type == 'text'" class="field level is-mobile">
+        <div v-if="data.type == 'text'" :name="data.id" class="field level is-mobile">
           <input v-model="text_correct[index]" class="input" type="text" placeholder="Ответ" @change="SetCorrect(text_correct)"/>
 
           <button class="button" @click="DelOption(option.id)"> <span> <i class="fa-solid fa-xmark"></i> </span> </button>
@@ -166,7 +166,7 @@
 
       </div>
 
-      <div v-if="data.type == 'detailed'" class="field level is-mobile">
+      <div v-if="data.type == 'detailed'" :name="data.id" class="field level is-mobile">
         Развернутый ответ по данному вопросу.
       </div>
 
