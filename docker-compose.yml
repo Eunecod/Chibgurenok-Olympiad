@@ -9,6 +9,8 @@ services:
       dockerfile: .docker/Dockerfile.backend
     ports:
       - "5000:5000"
+    volumes:
+      - ./backend/database/app.db:/database/app.db
     networks:
       - dev 
 
